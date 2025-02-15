@@ -1,4 +1,5 @@
 import os
+import pickle
 
 from skimage.io import imread
 from skimage.transform import resize
@@ -41,7 +42,6 @@ labels = np.asarray(labels)
 # train test split
 X_train, X_test, y_train, y_test = train_test_split(data, labels, test_size=0.2, stratify=labels, shuffle=True)
 
-
 #classify
 classifier = SVC()
 parameters = [{'gamma': [0.01, 0.001, 0.0001], 'C':[1,10,100,1000]}]
@@ -57,3 +57,5 @@ y_pred = best_estimator.predict(X_test)
 
 score = accuracy_score(y_pred,y_test)
 print(score)
+
+pickle.dump(best_estimator, open('./model.p','wb'))
